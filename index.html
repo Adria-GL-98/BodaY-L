@@ -122,7 +122,7 @@ html, body {
 /* swipe hint */
 .swipe-hint {
   position: absolute;
-  bottom: calc(2.1rem);
+  bottom: calc(1.8rem + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -278,13 +278,13 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: 10px;
-  height: 10px;
+  width: 300vmax;
+  height: 300vmax;
   border-radius: 50%;
   background: #f5ede4;
   z-index: 50;
   pointer-events: none;
-  transition: transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .ring-overlay.visible {
   pointer-events: auto;
@@ -430,7 +430,7 @@ html, body {
         </div>
 
         <div class="divider" style="margin-top:1.2rem;"></div>
-        <div class="msg" style="font-size:0.85rem;">El amor que se afianzó junto a este lago 🏔️🇨🇦</div>
+        <div class="msg" style="font-size:0.85rem;">El amor que comenzó<br>junto a este lago 🏔️</div>
       </div>
 
       <!-- foto derecha -->
@@ -529,9 +529,8 @@ setInterval(tick, 1000);
 // ── Ring reveal ──
 const overlay = document.getElementById('ring-overlay');
 const ringMsg = document.getElementById('ring-msg');
-const ringBtn = document.getElementById('ring-btn');
 let ringStep = 0;
-const scales = [30, 60, 100, 160]; // cada click → más grande
+const scales = [0.08, 0.2, 0.5, 1];
 
 function ringClick() {
   if (ringStep >= scales.length) return;
@@ -545,11 +544,10 @@ function ringClick() {
 }
 
 overlay.addEventListener('click', () => {
-  // cerrar al tocar el fondo
   overlay.style.transform = 'translate(-50%, -50%) scale(0)';
   overlay.classList.remove('visible');
   ringMsg.classList.remove('show');
-  ringStep = 0;
+  setTimeout(() => { ringStep = 0; }, 600);
 });
 </script>
 <!-- Ring overlay -->
